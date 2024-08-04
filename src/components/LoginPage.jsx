@@ -10,7 +10,7 @@ const LoginPage = ({ onLogin }) => {
         event.preventDefault();
         console.log('Login button clicked'); // This should log when the button is clicked
         try {
-            const response = await axios.get('https://main.d2wbatuus0382b.amplifyapp.com/users', {
+            const response = await axios.get('http://main.d2wbatuus0382b.amplifyapp.com/users', {
                 params: { email, password }
             });
             console.log('Response:', response.data); // Log the response to ensure the request is successful
