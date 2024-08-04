@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../App.css';
+import '../App.css'; // Ensure this file exists
 
 const LoginPage = ({ onLogin }) => {
     const [email, setEmail] = useState('');
@@ -8,16 +8,15 @@ const LoginPage = ({ onLogin }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Login button clicked');
+        console.log('Login button clicked'); // This should log when the button is clicked
         try {
-            const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-            const response = await axios.get(`${apiBaseUrl}/users`, {
+            const response = await axios.get('https://main.d2wbatuus0382b.amplifyapp.com/users', {
                 params: { email, password }
             });
-            console.log('Response:', response.data);
+            console.log('Response:', response.data); // Log the response to ensure the request is successful
             const user = response.data.find(user => user.email === email && user.password === password);
             if (user) {
-                console.log('User found:', user);
+                console.log('User found:', user); // This should log if the user is found
                 onLogin(user); // Call onLogin with the user data
             } else {
                 alert('Invalid credentials');
