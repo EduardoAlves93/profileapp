@@ -10,7 +10,8 @@ const LoginPage = ({ onLogin }) => {
         event.preventDefault();
         console.log('Login button clicked');
         try {
-            const response = await axios.get('http://localhost:5000/users', {
+            const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+            const response = await axios.get(`${apiBaseUrl}/users`, {
                 params: { email, password }
             });
             console.log('Response:', response.data);
