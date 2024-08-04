@@ -3,7 +3,7 @@ import cors from 'cors';
 
 const app = express();
 
-const allowedOrigins = ['https://main.d2wbatuus0382b.amplifyapp.com'];
+const allowedOrigins = ['https://main.d2wbatuus0382b.amplifyapp.com/'];
 
 app.use(cors({
     origin: function(origin, callback) {
