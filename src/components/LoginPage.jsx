@@ -8,17 +8,12 @@ const LoginPage = ({ onLogin }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Login button clicked'); // This should log when the button is clicked
         try {
-            const baseUrl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.get(`${baseUrl}/users`, {
-                params: { email, password }
-            });
-            console.log('Response:', response.data); // Log the response to ensure the request is successful
-            const user = response.data.find(user => user.email === email && user.password === password);
+            const response = await axios.get('/db.json');
+            const users = response.data.users;
+            const user = users.find(user => user.email === email && user.password === password);
             if (user) {
-                console.log('User found:', user); // This should log if the user is found
-                onLogin(user); // Call onLogin with the user data
+                onLogin(user);
             } else {
                 alert('Invalid credentials');
             }
