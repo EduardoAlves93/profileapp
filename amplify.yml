@@ -1,0 +1,18 @@
+version: 1
+applications:
+  backend:
+    phases:
+      build:
+        commands:
+          - cd backend     # Navigate to the backend directory
+          - npm install    # Install dependencies
+      start:
+        commands:
+          - npm start      # Start the server
+    artifacts:
+      baseDirectory: /backend # Path to your backend directory
+      files:
+        - '**/*'              # Include all files
+    cache:
+      paths:
+        - 'node_modules/**/*'
