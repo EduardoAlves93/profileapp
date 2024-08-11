@@ -9,7 +9,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 // CORS configuration for production
 const corsOptions = {
-    origin: isProduction ? 'https://your-production-domain.com' : 'http://localhost:5173', // Replace with your production domain
+    origin: isProduction ? 'https://main.d2wbatuus0382b.amplifyapp.com/' : 'http://localhost:5173', // Replace with your production domain
     optionsSuccessStatus: 200,
 };
 
