@@ -1,36 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../App.css'; // Ensure this file exists
 
-const LoginPage = ({ onLogin }) => {
+const AddStudents = () => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
+    const baseURL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000';
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const baseURL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000';
-            const response = await axios.get(`${baseURL}/users`);
-            const users = response.data;
-            const user = users.find(user => user.name === name && user.password === password);
-
-            if (user) {
-                if (user.isAdmin) {
-                    onLogin(user, true); // Pass `true` to indicate an admin login
-                } else {
-                    onLogin(user, false); // Regular user login
-                }
-            } else {
-                alert('Invalid credentials');
-            }
+            const newStudent = { name, password };
+            const response = await axios.post(`${baseURL}/users`, newStudent);
+            console.log('Student added:', response.data);
+            alert('Student added successfully');
         } catch (error) {
-            console.error('Login failed:', error);
+            console.error('Failed to add student:', error);
+            alert('Failed to add student');
         }
     };
 
     return (
         <div className="container">
-            <h2>Login</h2>
+            <h2>Add Student</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -46,10 +37,10 @@ const LoginPage = ({ onLogin }) => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">Login</button>
+                <button type="submit">Add Student</button>
             </form>
         </div>
     );
 };
 
-export default LoginPage;
+export default AddStudents;

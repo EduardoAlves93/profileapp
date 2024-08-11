@@ -1,14 +1,16 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "ines_fernandes",
-      "password": "1234"
+      "password": "1234",
+      "isAdmin": true
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "eduardo_alves",
-      "password": "1234"
+      "password": "1234",
+      "isAdmin": true
     }
   ]
 }

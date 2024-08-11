@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import Dashboard from './components/Dashboard';
+import AdminDashboard from "./components/AdminDashboard";
 import './App.css';
 
 const App = () => {
@@ -13,7 +14,11 @@ const App = () => {
         console.log('Login successful:', userData);
         setIsAuthenticated(true);
         setUser(userData);
-        navigate('/dashboard');
+        if (userData.isAdmin) {
+            navigate('/admindashboard'); // Redirect to the admin dashboard
+        } else {
+            navigate('/dashboard'); // Redirect to the regular user dashboard
+        }
     };
 
     const handleLogout = () => {
@@ -37,6 +42,10 @@ const App = () => {
             <Route
                 path="/dashboard/*"
                 element={isAuthenticated ? <Dashboard user={user} onLogout={handleLogout} /> : <Navigate to="/login" />}
+            />
+            <Route
+                path="/admindashboard/*"
+                element={isAuthenticated ? <AdminDashboard user={user} onLogout={handleLogout} /> : <Navigate to="/login" />}
             />
             <Route
                 path="*"
