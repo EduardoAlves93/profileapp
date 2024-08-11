@@ -9,7 +9,7 @@ const Dashboard = ({ user, onLogout }) => {
 
     return (
         <div className="container">
-            <h2>Welcome, {user.email}!</h2>
+            <h2>Welcome, {user.name}!</h2>
             <button onClick={onLogout}>Logout</button>
             <nav>
                 <ul>

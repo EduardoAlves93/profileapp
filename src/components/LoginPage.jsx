@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../App.css'; // Ensure this file exists
 
 const LoginPage = ({ onLogin }) => {
-    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (event) => {
@@ -11,7 +11,7 @@ const LoginPage = ({ onLogin }) => {
         try {
             const response = await axios.get('/db.json');
             const users = response.data.users;
-            const user = users.find(user => user.email === email && user.password === password);
+            const user = users.find(user => user.name === name && user.password === password);
             if (user) {
                 onLogin(user);
             } else {
@@ -27,10 +27,10 @@ const LoginPage = ({ onLogin }) => {
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    type="text"
+                    placeholder="User Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                 />
                 <input
