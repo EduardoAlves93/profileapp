@@ -5,11 +5,15 @@ import '../App.css'; // Ensure this file exists
 const LoginPage = ({ onLogin }) => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    const baseURL = isProduction
+        ? process.env.REACT_APP_API_BASE_URL
+        : 'http://localhost:5000';
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const baseURL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000';
             const response = await axios.get(`${baseURL}/users`);
             const users = response.data;
             const user = users.find(user => user.name === name && user.password === password);
