@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 5000;
+require('dotenv').config();
 
 // Determine the environment (development or production)
 const isProduction = process.env.NODE_ENV === 'production';

@@ -1,22 +1,47 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import AWS from 'aws-sdk';
+//const accesskey = import.meta.env.VITE_AWS_ACCESS_KEY_ID;
+//const secretkey = import.meta.env.VITE_AWS_SECRET_ACCESS_KEY;
 
 const DeleteUser = () => {
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
-    const baseURL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000';
+
+    // Configure AWS SDK DEV
+    //AWS.config.update({
+    //    accessKeyId: accesskey,
+    //    secretAccessKey: secretkey,  // Store securely
+    //    region: 'us-east-1',  // Replace with your region
+    //});
+
+    const s3 = new AWS.S3();
+    // Load the existing data from the S3 bucket
+    const bucketParams = {
+        Bucket: 'db-bucket-api',
+        Key: 'db.json'
+    };
+
 
     const handleDelete = async (event) => {
         event.preventDefault();
 
         try {
-            const response = await axios.delete(`${baseURL}/users/${name}`);
+            const data = await s3.getObject(bucketParams).promise();
+            let db = JSON.parse(data.Body.toString('utf-8'));
 
-            if (response.status === 200) {
-                setMessage(`User "${name}" deleted successfully.`);
-            } else {
-                setMessage(`User "${name}" could not be deleted.`);
-            }
+            // Remove the student
+            db.users = db.users.filter(user => user.name !== name);
+
+            // Upload the updated db.json back to S3
+            const uploadParams = {
+                Bucket:  bucketParams.Bucket,
+                Key: bucketParams.Key,
+                Body: JSON.stringify(db),
+                ContentType: 'application/json'
+            };
+
+            await s3.putObject(uploadParams).promise();
+            alert('Student deleted successfully');
         } catch (error) {
             console.error('Error deleting user:', error);
             setMessage('An error occurred while deleting the user.');
