@@ -6,6 +6,16 @@ export default defineConfig({
   plugins: [react()],
   define: {
     'process.env': process.env,
-    global: 'globalThis', // or you can use the global package
+    global: 'globalThis',
+  },
+  build: {
+    minify: 'terser', // Use Terser for minification
+    terserOptions: {
+      keep_classnames: true, // Keep class names during minification
+      keep_fnames: true,     // Keep function names during minification
+    },
+    rollupOptions: {
+      external: ['aws-sdk'], // Externalize aws-sdk to avoid bundling it incorrectly
+    },
   },
 });
