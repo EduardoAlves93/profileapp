@@ -13,9 +13,6 @@ export default defineConfig({
     terserOptions: {
       keep_classnames: true, // Keep class names during minification
       keep_fnames: true,     // Keep function names during minification
-    },
-    rollupOptions: {
-      external: ['aws-sdk'], // Externalize aws-sdk to avoid bundling it incorrectly
-    },
+    }
   },
 });
