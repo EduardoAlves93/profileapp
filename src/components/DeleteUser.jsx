@@ -1,55 +1,33 @@
 import React, { useState } from 'react';
-import AWS from 'aws-sdk';
-//const accesskey = import.meta.env.VITE_AWS_ACCESS_KEY_ID;
-//const secretkey = import.meta.env.VITE_AWS_SECRET_ACCESS_KEY;
+import axios from 'axios';
 
 const DeleteUser = () => {
-    const [name, setName] = useState('');
-    const [message, setMessage] = useState('');
-
-    // Configure AWS SDK DEV
-    //AWS.config.update({
-    //    accessKeyId: accesskey,
-    //    secretAccessKey: secretkey,  // Store securely
-    //    region: 'us-east-1',  // Replace with your region
-    //});
-
-    const s3 = new AWS.S3();
-    // Load the existing data from the S3 bucket
-    const bucketParams = {
-        Bucket: 'db-bucket-api',
-        Key: 'db.json'
-    };
-
+    const [username, setUsername] = useState('');
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     const handleDelete = async (event) => {
         event.preventDefault();
+        setError(null);
+        setSuccess(null);
 
         try {
-            const data = await s3.getObject(bucketParams).promise();
-            let db = JSON.parse(data.Body.toString('utf-8'));
+            // Make an API call to your delete_user endpoint
+            const response = await axios.post('https://25p29nw5mg.execute-api.us-east-1.amazonaws.com/prod/delete_user', {
+                username
+            });
 
-            // Remove the student
-            db.users = db.users.filter(user => user.name !== name);
-
-            // Upload the updated db.json back to S3
-            const uploadParams = {
-                Bucket:  bucketParams.Bucket,
-                Key: bucketParams.Key,
-                Body: JSON.stringify(db),
-                ContentType: 'application/json'
-            };
-
-            await s3.putObject(uploadParams).promise();
-            alert('Student deleted successfully');
+            if (response.status === 200) {
+                setSuccess('User deleted successfully');
+                setUsername('');
+            } else {
+                setError('Failed to delete user');
+            }
         } catch (error) {
-            console.error('Error deleting user:', error);
-            setMessage('An error occurred while deleting the user.');
+            console.error('Failed to delete user:', error);
+            setError('Failed to delete user');
         }
-
-        setName('');
     };
-
 
     return (
         <div className="container">
@@ -58,13 +36,14 @@ const DeleteUser = () => {
                 <input
                     type="text"
                     placeholder="User Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                 />
                 <button type="submit">Delete User</button>
             </form>
-            {message && <p>{message}</p>}
+            {success && <p className="success">{success}</p>}
+            {error && <p className="error">{error}</p>}
         </div>
     );
 };

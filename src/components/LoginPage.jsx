@@ -1,47 +1,31 @@
 import React, { useState } from 'react';
-import '../App.css'; // Ensure this file exists
-import AWS from 'aws-sdk';
-
-//const accesskey = import.meta.env.VITE_AWS_ACCESS_KEY_ID;
-//const secretkey = import.meta.env.VITE_AWS_SECRET_ACCESS_KEY;
+import axios from 'axios';
 
 const LoginPage = ({ onLogin }) => {
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const [error, setError] = useState(null);
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault();  // Prevent default form submission behavior
+        setError(null);  // Reset error state before new submission
+
         try {
-            // Configure AWS SDK DEV
-            //AWS.config.update({
-            //    accessKeyId: accesskey,
-            //    secretAccessKey: secretkey,  // Store securely
-            //    region: 'us-east-1',  // Replace with your region
-            //});
+            // Call the login API
+            const response = await axios.post('https://25p29nw5mg.execute-api.us-east-1.amazonaws.com/prod/login', {
+                username,
+                password,
+            });
 
-            const s3 = new AWS.S3();
-
-            // Fetch db.json from S3
-            const params = {
-                Bucket: 'db-bucket-api',  // Replace with your bucket name
-                Key: 'db.json',  // Replace with your file key in the S3 bucket
-            }
-            const data = await s3.getObject(params).promise();
-            const users = JSON.parse(data.Body.toString('utf-8')).users;
-            const user = users.find(user => user.name === name && user.password === password);
-
-            if (user) {
-                if (user.isAdmin) {
-                    onLogin(user, true); // Pass `true` to indicate an admin login
-                } else {
-                    onLogin(user, false); // Regular user login
-                }
+            if (response.status === 200) {
+                const userData = response.data.user;
+                onLogin(userData);  // Call the parent function with user data
             } else {
-                alert('Invalid credentials');
+                setError('Invalid credentials');
             }
         } catch (error) {
             console.error('Login failed:', error);
+            setError('Login failed. Please try again.');
         }
     };
 
@@ -52,8 +36,8 @@ const LoginPage = ({ onLogin }) => {
                 <input
                     type="text"
                     placeholder="User Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                 />
                 <input
@@ -65,6 +49,7 @@ const LoginPage = ({ onLogin }) => {
                 />
                 <button type="submit">Login</button>
             </form>
+            {error && <p className="error">{error}</p>}
         </div>
     );
 };

@@ -1,0 +1,29 @@
+.section {
+    margin: 20px;
+}
+
+.teachers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.teachers-table th,
+.teachers-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.teachers-table th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.teachers-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.teachers-table tr:hover {
+    background-color: #f1f1f1;
+}

@@ -1,49 +1,35 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import AWS from 'aws-sdk';
-//const accesskey = import.meta.env.VITE_AWS_ACCESS_KEY_ID;
-//const secretkey = import.meta.env.VITE_AWS_SECRET_ACCESS_KEY;
 
 const AddStudents = () => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-
-    // Configure AWS SDK
-    //AWS.config.update({
-    //    accessKeyId: accesskey,
-    //    secretAccessKey: secretkey,  // Store securely
-    //    region: 'us-east-1',  // Replace with your region
-    //});
-
-    const s3 = new AWS.S3();
-    // Load the existing data from the S3 bucket
-    const bucketParams = {
-        Bucket: 'db-bucket-api',
-        Key: 'db.json'
-    };
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setError(null);
+        setSuccess(null);
+
         try {
-            const data = await s3.getObject(bucketParams).promise();
-            let db = JSON.parse(data.Body.toString('utf-8'));
+            // Make an API call to your add_user endpoint
+            const response = await axios.post('https://25p29nw5mg.execute-api.us-east-1.amazonaws.com/prod/create_user', {
+                name,
+                password,
+                isAdmin: false  // Since we are adding a student, set isAdmin to false
+            });
 
-            // Add the new student
-            db.users.push({ name, password, isAdmin: false });
-
-            // Upload the updated db.json back to S3
-            const uploadParams = {
-                Bucket: bucketParams.Bucket,
-                Key: bucketParams.Key,
-                Body: JSON.stringify(db),
-                ContentType: 'application/json'
-            };
-
-            await s3.putObject(uploadParams).promise();
-            alert('Student added successfully');
+            if (response.status === 200) {
+                setSuccess('Student added successfully');
+                setName('');
+                setPassword('');
+            } else {
+                setError('Failed to add student');
+            }
         } catch (error) {
             console.error('Failed to add student:', error);
-            alert('Failed to add student');
+            setError('Failed to add student');
         }
     };
 
@@ -67,6 +53,8 @@ const AddStudents = () => {
                 />
                 <button type="submit">Add Student</button>
             </form>
+            {success && <p className="success">{success}</p>}
+            {error && <p className="error">{error}</p>}
         </div>
     );
 };
