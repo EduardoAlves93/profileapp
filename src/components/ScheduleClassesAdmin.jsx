@@ -201,6 +201,16 @@ const ScheduleClassesAdmin = () => {
                                     ) : (
                                         <button onClick={() => handleEnroll(classItem.classId)}>Marcar</button>
                                     )}
+                                    <strong>Estudantes Inscritos:</strong>
+                                    {classItem.enrolledStudents && classItem.enrolledStudents.length > 0 ? (
+                                        <ul>
+                                            {classItem.enrolledStudents.map((student, index) => (
+                                                <li key={index}>{student}</li>  // Display each enrolled student
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p>Nenhum estudante inscrito.</p>
+                                    )}
                                 </div>
                             </li>
                         ))}

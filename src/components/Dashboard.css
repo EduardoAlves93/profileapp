@@ -1,0 +1,52 @@
+.container {
+    margin: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.logout-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.logout-btn:hover {
+    background-color: #e60000;
+}
+
+.dashboard-nav {
+    margin-bottom: 20px;
+}
+
+.tab-list {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tab-link {
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green background to match Admin tabs */
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.tab-link:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+}
+
+.tab-link.active {
+    background-color: #2e7d32; /* Darker green for the active tab */
+    color: white;
+}

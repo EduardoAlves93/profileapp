@@ -45,23 +45,23 @@ const DeleteUser = () => {
 
     return (
         <div className="container">
-            <h2>Delete User</h2>
+            <h2>Remover Alunos</h2>
             <form onSubmit={handleDelete}>
-                <label htmlFor="users">Select User:</label>
+                <label htmlFor="users">Selecionar Aluno:</label>
                 <select
                     id="users"
                     value={selectedUser}
                     onChange={(e) => setSelectedUser(e.target.value)}
                     required
                 >
-                    <option value="">--Select a User--</option>
+                    <option value="">--alunos--</option>
                     {users.map((user) => (
                         <option key={user} value={user}>
                             {user}
                         </option>
                     ))}
                 </select>
-                <button type="submit">Delete User</button>
+                <button type="submit">Remover Aluno</button>
             </form>
             {success && <p className="success">{success}</p>}
             {error && <p className="error">{error}</p>}

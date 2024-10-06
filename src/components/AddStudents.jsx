@@ -21,37 +21,37 @@ const AddStudents = () => {
             });
 
             if (response.status === 200) {
-                setSuccess('Student added successfully');
+                setSuccess('Aluno Adicionado.');
                 setName('');
                 setPassword('');
             } else {
-                setError('Failed to add student');
+                setError('Não foi possível adicionar aluno.');
             }
         } catch (error) {
             console.error('Failed to add student:', error);
-            setError('Failed to add student');
+            setError('Não foi possível adicionar aluno.');
         }
     };
 
     return (
         <div className="container">
-            <h2>Add Student</h2>
+            <h2>Adicionar Alunos</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    placeholder="User Name"
+                    placeholder="Nome do Aluno"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                 />
                 <input
                     type="password"
-                    placeholder="Password"
+                    placeholder="Senha"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">Add Student</button>
+                <button type="submit">Adicionar Aluno</button>
             </form>
             {success && <p className="success">{success}</p>}
             {error && <p className="error">{error}</p>}
