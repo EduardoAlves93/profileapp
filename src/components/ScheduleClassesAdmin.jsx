@@ -201,7 +201,7 @@ const ScheduleClassesAdmin = () => {
                                     ) : (
                                         <button onClick={() => handleEnroll(classItem.classId)}>Marcar</button>
                                     )}
-                                    <strong>Estudantes Inscritos:</strong>
+                                    <strong> <br /> Estudantes Inscritos:</strong>
                                     {classItem.enrolledStudents && classItem.enrolledStudents.length > 0 ? (
                                         <ul>
                                             {classItem.enrolledStudents.map((student, index) => (

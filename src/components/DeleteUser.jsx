@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './DeleteUser.css';
 
 const DeleteUser = () => {
     const [users, setUsers] = useState([]); // State to store users
@@ -61,7 +62,7 @@ const DeleteUser = () => {
                         </option>
                     ))}
                 </select>
-                <button type="submit">Remover Aluno</button>
+                <button type="submit"> Remover Aluno</button>
             </form>
             {success && <p className="success">{success}</p>}
             {error && <p className="error">{error}</p>}

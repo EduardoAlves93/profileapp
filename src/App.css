@@ -12,11 +12,17 @@ body {
   line-height: 1.6;
 }
 
+
+/* A container for the entire page */
 .container {
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
+  box-sizing: border-box;
 }
+
 
 h2 {
   margin-bottom: 20px;
