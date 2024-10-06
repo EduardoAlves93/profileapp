@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const DeleteUser = () => {
-    const [username, setUsername] = useState('');
+    const [users, setUsers] = useState([]); // State to store users
+    const [selectedUser, setSelectedUser] = useState(''); // State for the selected user
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get('https://25p29nw5mg.execute-api.us-east-1.amazonaws.com/prod/get_students'); // Replace with your users endpoint
+                setUsers(response.data.students || []);
+            } catch (error) {
+                console.error('Failed to fetch users:', error);
+                setError('Failed to load users');
+            }
+        };
+
+        fetchUsers();
+    }, []);
 
     const handleDelete = async (event) => {
         event.preventDefault();
@@ -12,14 +27,13 @@ const DeleteUser = () => {
         setSuccess(null);
 
         try {
-            // Make an API call to your delete_user endpoint
             const response = await axios.post('https://25p29nw5mg.execute-api.us-east-1.amazonaws.com/prod/delete_user', {
-                username
+                username: selectedUser // Use the selected user
             });
 
             if (response.status === 200) {
                 setSuccess('User deleted successfully');
-                setUsername('');
+                setSelectedUser(''); // Reset selection
             } else {
                 setError('Failed to delete user');
             }
@@ -33,13 +47,20 @@ const DeleteUser = () => {
         <div className="container">
             <h2>Delete User</h2>
             <form onSubmit={handleDelete}>
-                <input
-                    type="text"
-                    placeholder="User Name"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                <label htmlFor="users">Select User:</label>
+                <select
+                    id="users"
+                    value={selectedUser}
+                    onChange={(e) => setSelectedUser(e.target.value)}
                     required
-                />
+                >
+                    <option value="">--Select a User--</option>
+                    {users.map((user) => (
+                        <option key={user} value={user}>
+                            {user}
+                        </option>
+                    ))}
+                </select>
                 <button type="submit">Delete User</button>
             </form>
             {success && <p className="success">{success}</p>}

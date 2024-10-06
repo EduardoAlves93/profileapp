@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import SchoolInfo from './SchoolInfo';
 import TeachersInfo from './TeachersInfo';
+import ScheduleClasses from './ScheduleClasses';
 
 const Dashboard = ({ user, onLogout }) => {
     console.log('Dashboard rendered with user:', user);
@@ -14,11 +15,13 @@ const Dashboard = ({ user, onLogout }) => {
                 <ul>
                     <li><Link to="school-info">Info Escola</Link></li>
                     <li><Link to="teachers-info">Instrutores</Link></li>
+                    <li><Link to="schedule-classes">Marcar Aulas</Link></li>
                 </ul>
             </nav>
             <Routes>
                 <Route path="school-info" element={<SchoolInfo />} />
                 <Route path="teachers-info" element={<TeachersInfo />} />
+                <Route path="schedule-classes" element={<ScheduleClasses username={user.username} />} />
             </Routes>
         </div>
     );

@@ -1,0 +1,70 @@
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h2, h3 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+input {
+    margin: 5px 0;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+.event {
+    background-color: #31708f; /* Bootstrap's info color */
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.8em; /* Decrease font size */
+}
+
+.event strong {
+    font-size: 1em; /* Adjust class name size */
+}
+
+.container {
+    padding: 20px;
+}
+
+.event {
+    background-color: #31708f; /* Bootstrap's info color */
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.8em; /* Decrease font size for the whole event */
+}
+
+.event strong {
+    font-size: 1em; /* Adjust class name size */
+}
+
+.event-time {
+    font-size: 0.7em; /* Decrease font size for the time */
+    margin: 0; /* Remove margin for tighter layout */
+}

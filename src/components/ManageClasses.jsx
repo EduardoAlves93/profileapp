@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
-import { format, parse, startOfWeek, getDay } from 'date-fns'; // Correctly import date-fns functions
+import { format, parse, startOfWeek, getDay } from 'date-fns';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './ManageClasses.css'; // Make sure to import the CSS file
 
 // Define the locales for date formatting
 const locales = {
-    'en-US': import('date-fns/locale/en-US'), // Import the required locale
+    'en-US': import('date-fns/locale/en-US'),
 };
 
 // Set up the localizer for date management
@@ -27,12 +28,12 @@ const ManageClasses = ({ username }) => {
 
     const fetchClasses = async () => {
         try {
-            const response = await axios.get('https://25p29nw5mg.execute-api.us-east-1.amazonaws.com/prod/get_classes'); // Update with your endpoint
+            const response = await axios.get('https://25p29nw5mg.execute-api.us-east-1.amazonaws.com/prod/get_classes');
             const formattedClasses = response.data.classes.map(classItem => ({
                 id: classItem.classId,
-                title: `${classItem.className} - ${new Date(classItem.classTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`, // Show class name and start time                start: new Date(classItem.classTime), // Make sure ClassTime is in ISO format
-                start: new Date(classItem.classTime), // Make sure ClassTime is in ISO format
-                end: new Date(new Date(classItem.classTime).getTime() + classItem.duration * 60000), // Add duration in minutes
+                title: classItem.className, // Show only the class name
+                start: new Date(classItem.classTime),
+                end: new Date(new Date(classItem.classTime).getTime() + classItem.duration * 60000),
                 maxPeople: classItem.maxPeople,
                 availableSpots: classItem.availableSpots,
             }));
@@ -54,7 +55,7 @@ const ManageClasses = ({ username }) => {
             });
 
             alert('Class created successfully');
-            fetchClasses(); // Refresh the classes list
+            fetchClasses();
         } catch (error) {
             console.error('Error creating class:', error);
         }
@@ -64,13 +65,21 @@ const ManageClasses = ({ username }) => {
         fetchClasses();
     }, []);
 
+    const CustomEvent = ({ event }) => (
+        <div className="event">
+            <strong>{event.title}</strong>
+            <p className="event-time">{new Date(event.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+            <p>{event.availableSpots} spots available</p>
+        </div>
+    );
+
     return (
         <div className="container">
-            <h2>Manage Classes</h2>
+            <h2>Criar Aula</h2>
             <form onSubmit={handleCreateClass}>
                 <input
                     type="text"
-                    placeholder="Class Name"
+                    placeholder="Nome da Aula"
                     value={className}
                     onChange={(e) => setClassName(e.target.value)}
                     required
@@ -83,14 +92,14 @@ const ManageClasses = ({ username }) => {
                 />
                 <input
                     type="number"
-                    placeholder="Duration (minutes)"
+                    placeholder="Duração (minutos)"
                     value={duration}
                     onChange={(e) => setDuration(e.target.value)}
                     required
                 />
                 <input
                     type="number"
-                    placeholder="Max People"
+                    placeholder="Máximo de Pessoas"
                     value={maxPeople}
                     onChange={(e) => setMaxPeople(e.target.value)}
                     required
@@ -106,8 +115,11 @@ const ManageClasses = ({ username }) => {
                     startAccessor="start"
                     endAccessor="end"
                     style={{ height: 500, margin: "50px" }}
-                    views={['month']} // Show only the month view
-                    defaultView="month" // Set the default view to month
+                    views={['month']}
+                    defaultView="month"
+                    components={{
+                        event: CustomEvent, // Use the custom event component
+                    }}
                 />
             </div>
         </div>

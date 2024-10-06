@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import SchoolInfo from './SchoolInfo';
 import TeachersInfo from './TeachersInfo';
 import AddStudents from './AddStudents';
-import DeleteUser from './DeleteUser'; // Import DeleteUser component
-import ManageClasses from './ManageClasses'; // Import ManageClasses component
+import DeleteUser from './DeleteUser';
+import ManageClasses from './ManageClasses';
+import ScheduleClassesAdmin from './ScheduleClassesAdmin'; // Import the ScheduleClasses component
 
 const AdminDashboard = ({ user, onLogout }) => {
-    console.log('Dashboard rendered with user:', user);
+    const [students, setStudents] = useState([]);
+    const [loadingStudents, setLoadingStudents] = useState(true);
+    const [error, setError] = useState(null);
 
     return (
         <div className="container">
@@ -18,8 +21,9 @@ const AdminDashboard = ({ user, onLogout }) => {
                     <li><Link to="school-info">Info Escola</Link></li>
                     <li><Link to="teachers-info">Instrutores</Link></li>
                     <li><Link to="add-users">Adicionar Alunos</Link></li>
-                    <li><Link to="delete-user">Delete User</Link></li> {/* New link for deleting a user */}
-                    <li><Link to="manage-classes">Manage Classes</Link></li> {/* New link for managing classes */}
+                    <li><Link to="delete-user">Apagar Aluno</Link></li>
+                    <li><Link to="manage-classes">Criar Aulas</Link></li>
+                    <li><Link to="schedule-classes">Marcar Aulas</Link></li> {/* Link to ScheduleClasses */}
                 </ul>
             </nav>
             <Routes>
@@ -27,7 +31,8 @@ const AdminDashboard = ({ user, onLogout }) => {
                 <Route path="teachers-info" element={<TeachersInfo />} />
                 <Route path="add-users" element={<AddStudents />} />
                 <Route path="delete-user" element={<DeleteUser />} />
-                <Route path="manage-classes" element={<ManageClasses username={user.username} />} /> {/* Pass username as prop */}
+                <Route path="manage-classes" element={<ManageClasses username={user.username} />} />
+                <Route path="schedule-classes" element={<ScheduleClassesAdmin students={students} />} /> {/* Pass students to ScheduleClasses */}
             </Routes>
         </div>
     );
