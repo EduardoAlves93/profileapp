@@ -7,6 +7,7 @@ import DeleteUser from './DeleteUser';
 import ManageClasses from './ManageClasses';
 import ScheduleClassesAdmin from './ScheduleClassesAdmin';
 import './AdminDashboard.css';
+import ConfirmPresence from "./ConfirmPresence.jsx";
 
 const AdminDashboard = ({ user, onLogout }) => {
     const adminuser = user
@@ -17,6 +18,7 @@ const AdminDashboard = ({ user, onLogout }) => {
         { label: 'Remover Alunos', path: 'delete-user' },
         { label: 'Criar Aulas', path: 'manage-classes' },
         { label: 'Marcar Aulas', path: 'schedule-classes' },
+        { label: 'Presenças', path: 'presence-classes' },
     ];
 
     return (
@@ -43,6 +45,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                 <Route path="delete-user" element={<DeleteUser />} />
                 <Route path="manage-classes" element={<ManageClasses username={user.username} />} />
                 <Route path="schedule-classes" element={<ScheduleClassesAdmin />} />
+                <Route path="presence-classes" element={<ConfirmPresence />} />
             </Routes>
         </div>
     );

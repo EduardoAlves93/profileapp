@@ -5,7 +5,6 @@
     margin: 0 auto;
 }
 
-/* Logout Button Styling */
 .logout-btn {
     background-color: #f44336;
     color: white;
@@ -13,8 +12,11 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-bottom: 20px;
+    position: absolute; /* This makes the button position relative to the page */
+    top: 20px; /* Distance from the top of the page */
+    right: 20px; /* Distance from the right side of the page */
 }
+
 
 .logout-btn:hover {
     background-color: #d32f2f;
@@ -26,13 +28,24 @@
 }
 
 .tab-list {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-around;
-    padding: 0;
-    margin: 0;
-    flex-wrap: wrap;
+    list-style-type: none;        /* Remove bullets from the list */
+    display: flex;                /* Use flexbox for alignment */
+    padding: 0;                  /* Remove default padding */
+    margin: 0;                   /* Remove default margin */
 }
+
+.tab-list .tab {
+    margin: 0;                   /* Remove any margin between tabs */
+    padding: 10px 15px;          /* Adjust padding for spacing within the tab */
+    border: 1px solid #ccc;      /* Optional: add border to tabs */
+    cursor: pointer;              /* Change cursor on hover */
+}
+
+.tab-list .tab.active {
+    background-color: #f0f0f0;   /* Optional: highlight active tab */
+    font-weight: bold;            /* Optional: make active tab bold */
+}
+
 
 .tab-link {
     text-decoration: none;

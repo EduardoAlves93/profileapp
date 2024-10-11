@@ -1,0 +1,99 @@
+.confirm-presence-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.subheading {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.message {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+.class-selection, .attendance-checklist {
+    margin-bottom: 30px;
+}
+
+.class-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.class-item {
+    margin-bottom: 10px;
+}
+
+.class-select-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.class-select-btn:hover {
+    background-color: #0056b3;
+}
+
+.attendance-checklist {
+    margin-top: 30px;
+}
+
+.student-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.student-item {
+    margin-bottom: 10px;
+}
+
+.student-label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.submit-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+}
